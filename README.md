@@ -83,7 +83,8 @@ Todos os eventos publicados (exceto pela Notificação) trafegam **assinados dig
 
 ```bash
 # 1. Clonar o repositório e entrar nele
-cd mom
+git clone https://github.com/paulnune/Trab1_MOM_Promocoes_2026_1_PPGCA_v2.git
+cd Trab1_MOM_Promocoes_2026_1_PPGCA_v2
 
 # 2. Gerar os pares de chaves dos 4 microsserviços
 bash gerar_chaves.sh
@@ -113,7 +114,7 @@ Painel de administração do Rabbit em <http://localhost:15672> (login padrão `
 ## Estrutura do projeto
 
 ```
-mom/
+Trab1_MOM_Promocoes_2026_1_PPGCA_v2/
 ├── docker-compose.yml
 ├── requirements.txt
 ├── gerar_chaves.sh         # bash + openssl, gera 4 pares RSA-2048
