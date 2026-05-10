@@ -37,6 +37,10 @@ Thumbs.db
 # Script auxiliar de desenvolvimento (não faz parte do trabalho)
 teste_publicar.py
 
+# Materiais do enunciado (não redistribuir em repo público)
+arquivos_ref/Trab1_MOM_Promocoes_2026_1_PPGCA.pdf
+arquivos_ref/Avaliação_MOM.md
+
 # Artefatos dos estudos
 arquivos_ref/**/*.bin
 arquivos_ref/**/__pycache__/
