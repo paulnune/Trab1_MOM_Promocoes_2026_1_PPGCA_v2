@@ -1,0 +1,13 @@
+  services:
+    rabbitmq:
+      image: rabbitmq:3-management 
+      container_name: rabbit-mom
+      hostname: rabbit-host
+      ports:
+        - "5672:5672"      # AMQP - porta que o Python (pika) usa
+        - "15672:15672"    # painel web de gerenciamento
+      volumes:
+        - rabbit_data:/var/lib/rabbitmq
+
+  volumes:
+    rabbit_data:

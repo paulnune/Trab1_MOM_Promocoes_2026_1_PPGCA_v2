@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Chaves privadas - geradas localmente via gerar_chaves.sh, NUNCA commitadas
+keys/*.pem
+keys/*.key
+
+# Variáveis de ambiente
+.env
+.env.local
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ferramentas locais
+.claude/
+
+# Pessoal — guia de construção do trabalho (referência interna)
+guide.md
+ensino.md
+
+# Script auxiliar de desenvolvimento (não faz parte do trabalho)
+teste_publicar.py
+
+# Artefatos dos estudos
+arquivos_ref/**/*.bin
+arquivos_ref/**/__pycache__/
+arquivos_ref/**/keys/
