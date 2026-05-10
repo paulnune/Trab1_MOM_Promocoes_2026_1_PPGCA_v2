@@ -31,9 +31,8 @@ Thumbs.db
 # Ferramentas locais
 .claude/
 
-# Pessoal — guia de construção do trabalho (referência interna)
-guide.md
-ensino.md
+# Material de estudo
+.aprendizado/
 
 # Script auxiliar de desenvolvimento (não faz parte do trabalho)
 teste_publicar.py
