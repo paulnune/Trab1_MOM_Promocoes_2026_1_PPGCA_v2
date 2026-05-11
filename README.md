@@ -144,4 +144,4 @@ Trab1_MOM_Promocoes_2026_1_PPGCA_v2/
 
 ## Autor
 
-Paulo Nunes — UTFPR, Sistemas Distribuídos (2026/1)
+Paulo Henrque Nunes Vanderley — UTFPR, Sistemas Distribuídos (2026/1)

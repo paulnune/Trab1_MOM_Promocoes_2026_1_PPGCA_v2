@@ -26,6 +26,13 @@ RABBIT_HOST = os.environ.get('RABBIT_HOST', 'localhost')
 EXCHANGE = 'promocoes'
 FILA = 'fila_notificacao'
 
+# Cache em memória das promoções já publicadas.
+# Usado pra enriquecer o hot deal (que vem do ranking só com {id, categoria, voto})
+# com os dados originais da promoção (titulo, preco, desconto_pct).
+# Limitação: se esse processo reiniciar, perde o cache. Promoções publicadas
+# antes do restart terão hot deal sem título/preço.
+promocoes_conhecidas = {}    # id_promo -> payload original
+
 
 # ====================================================================
 # CALLBACK
@@ -56,8 +63,16 @@ def callback(ch, method, properties, body):
     categoria = payload['categoria']
     id_promo = payload['id']
 
-    # 3. Se for destaque, marca como hot deal no payload.
-    if routing_origem == 'promocao.destaque':
+    # 3. Tratamento por tipo de evento.
+    if routing_origem == 'promocao.publicada':
+        # Cacheia o payload da promoção pra usar depois no hot deal.
+        promocoes_conhecidas[id_promo] = dict(payload)
+    elif routing_origem == 'promocao.destaque':
+        # Enriquece o payload do destaque com os dados originais da promoção
+        # (que o ranking não conhece). Começa do payload cacheado e sobrepõe
+        # com o que veio do ranking, pra manter marcador/votos.
+        original = promocoes_conhecidas.get(id_promo, {})
+        payload = {**original, **payload}
         payload['marcador'] = 'hot deal'
 
     # 4. Monta a routing key de saída pros clientes.

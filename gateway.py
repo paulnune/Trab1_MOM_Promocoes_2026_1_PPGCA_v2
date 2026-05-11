@@ -65,11 +65,13 @@ def cadastrar_promocao(channel):
     """Lê dados via input() e publica promocao.recebida assinada."""
     print('\n--- Cadastrar nova promoção ---')
     id_promo = input('id da promoção (ex: promo-001): ').strip()
-    categoria = input('categoria (ex: livro, jogo): ').strip()
+    # .lower() porque a categoria vira parte da routing key 'promocao.<categoria>',
+    # e topic exchange é case-sensitive — clientes bindam em 'promocao.livro'.
+    categoria = input('categoria (ex: livro, jogo): ').strip().lower()
     titulo = input('título: ').strip()
 
     try:
-        preco = float(input('preço (ex: 49.90): ').strip())
+        preco = float(input('preço (ex: 49,90 ou 49.90): ').strip().replace(',', '.'))
         desconto = int(input('desconto % (ex: 50): ').strip())
     except ValueError:
         print('preço/desconto inválido. operação cancelada.')
@@ -164,7 +166,12 @@ def listar_promocoes(connection):
 # MAIN
 # ====================================================================
 if __name__ == '__main__':
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBIT_HOST))
+    # heartbeat=0 desativa o heartbeat do AMQP. Necessário porque a CLI fica
+    # bloqueada em input() entre operações — sem isso, o broker corta a
+    # conexão por "missed heartbeats" depois de ~60s parado no menu.
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host=RABBIT_HOST, heartbeat=0)
+    )
     channel = connection.channel()
 
     channel.exchange_declare(exchange=EXCHANGE, exchange_type='topic', durable=True)

@@ -18,12 +18,19 @@ import pika
 RABBIT_HOST = os.environ.get('RABBIT_HOST', 'localhost')
 EXCHANGE = 'promocoes'
 
-# Categorias de interesse — hard-coded conforme enunciado permite.
-# Pode mudar pra simular outros perfis de cliente.
-CATEGORIAS = ['livro', 'jogo']
+# Identificador desse cliente (define quais categorias ele assina).
+NOME_CLIENTE = os.environ.get('CLIENT_NAME', 'cliente_ambos')
 
-# Identificador desse cliente (só pra log).
-NOME_CLIENTE = os.environ.get('CLIENT_NAME', 'cliente_A')
+# Mapa de perfil → categorias de interesse.
+# Pra simular outros perfis, adicione entradas aqui e use CLIENT_NAME=...
+PERFIS = {
+    'cliente_jogo':  ['jogo'],
+    'cliente_livro': ['livro'],
+    'cliente_ambos': ['livro', 'jogo'],
+}
+
+# Se o nome não estiver no mapa, cai no padrão (assina tudo).
+CATEGORIAS = PERFIS.get(NOME_CLIENTE, ['livro', 'jogo'])
 
 
 # ====================================================================
